@@ -4,7 +4,19 @@ from django.db.models import CASCADE
 
 
 # Create your models here.
+
+class Topic(models.Model):
+    name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+
+
 class Room(models.Model):
+    # host = models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
+    # topic = models.ForeignKey(Topic,on_delete=models.SET_NULL, null=True)
+    host = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True, related_name='rooms')
     name = models.CharField(max_length=100)
     description = models.TextField(null=True, blank=True)
     update = models.DateTimeField(auto_now=True)
@@ -15,8 +27,8 @@ class Room(models.Model):
 
 
 class Message(models.Model):
-    user = models.ForeignKey(User,on_delete=CASCADE)
-    room = models.ForeignKey(Room,on_delete=CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    room = models.ForeignKey(Room,on_delete=models.CASCADE)
     body = models.TextField()
     update = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
