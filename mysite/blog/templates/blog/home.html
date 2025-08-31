@@ -1,6 +1,11 @@
 <h1>Home Page</h1>
+
+<a href="{% url 'create-room' %}">Create Room</a>
+
+
 <ul>
   {% for item in items %}
+  <a href="{% url 'update-room' item.id %}"> Edit </a>
     <li>{{ item.id }} - {{ item.name }}</li>
   {% endfor %}
 </ul>
