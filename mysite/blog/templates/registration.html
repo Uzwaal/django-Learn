@@ -6,16 +6,13 @@
         {% csrf_token %}
         
         <label>Username:</label>
-        <input type="text" value="username" placeholder="Enter username">
+        <input type="text" name="username" placeholder="Enter username">
         
         <label>Password:</label>
-        <input type="password" value="password" placeholder="Enter password">
+        <input type="password" name="password" placeholder="Enter password">
         
-        <input type="submit" value="login/">
+        <input type="submit" value="login">
     
     </form>
 </div>
-
-
-
 {% endblock %}

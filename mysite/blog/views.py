@@ -2,6 +2,7 @@
 from django.shortcuts import render, redirect
 from .models import Room
 from .forms import RoomForm
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -10,6 +11,17 @@ context=[
     {'id':2, 'name':'I know'},
     {'id':3, 'name':'I dont know know'},
 ]
+
+
+def loginPage(request):
+    if request=="POST":
+        username= request.POST.get('username')
+        password= request.POST.get('password')
+        try:
+            user= User.objects.get(username=username)
+
+    context={}
+    return render (request,'registration.html', context)
 
 def home(request):
     rooms = Room.objects.all()
