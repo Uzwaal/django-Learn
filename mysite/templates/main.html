@@ -5,7 +5,18 @@
     <title>main</title>
 </head>
 <body>
-    {% include 'furniture.html' %}
+    {# {% include 'furniture.html' %} #}
+    
+    
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+    
     {% block content %}
     {% endblock %}
 </body>

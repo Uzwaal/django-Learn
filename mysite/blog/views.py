@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from .models import Room
 from .forms import RoomForm
 from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth import authenticate,login,logout
 
 # Create your views here.
 
@@ -17,8 +19,20 @@ def loginPage(request):
     if request=="POST":
         username= request.POST.get('username')
         password= request.POST.get('password')
-        try:
-            user= User.objects.get(username=username)
+         try:
+             user= User.objects.get(username=username)
+         except:
+             messages.error(request,'User does not exist')
+
+         user=authenticate(request, username=username, password=password)
+         if user is not None:
+             login(request,user)
+             return redirect('home')
+         else:
+            messages.error(request, 'Username or Password is incorrect')
+            return redirect('login')
+
+
 
     context={}
     return render (request,'registration.html', context)
@@ -65,3 +79,19 @@ def deleteRoom(request,pk):
         room.delete()
         return redirect('/')
     return render(request,'blog/delete.html', {'obj':room})
+
+
+from django.contrib import messages
+
+def loginPage(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            messages.error(request, 'User does not exist')
+            print("Messages in view:", list(messages.get_messages(request)))
+
+    return render(request, 'registration.html', {})
+
